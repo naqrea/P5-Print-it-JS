@@ -16,3 +16,15 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
+const leftArrow = document.getElementById("arrow_left")
+const rightArrow = document.getElementById("arrow_right")
+const leftClick = leftArrow.addEventListener(click, changeSlide())
+
+
+let slideOrder = 0;
+
+function changeSlide(slideOrder) {
+	alert("test listener")
+	
+
+}
