@@ -18,18 +18,46 @@ const slides = [
 ]
 
 const banner = document.getElementById("banner")
-const image = document.getElementById("image")
-const tagLine = document.getElementById("tagline")
-const leftArrow = document.getElementById("arrow_left")
-const rightArrow = document.getElementById("arrow_right")
-const slidesCount = slides.length
+const image = document.querySelector(".banner-img")
+const tagLine = document.querySelector("#banner p")
+const leftArrow = document.querySelector(".arrow_left")
+const rightArrow = document.querySelector(".arrow_right")
+const dots = document.querySelector(".dots")
+const totalSlides = slides.length
+let currentSlideIndex = 0
 
-let slidesOrder = 0
-function changeSlide(slidesOrder) {
-	if (slidesOrder > slidesCount - 1) slidesOrder = 0
-	image.src = `assets/images/slideshow/${slides[slidesOrder].image}`
-	tagLine.innerHTML = (slides[slidesOrder].tagLine)
+leftArrow.addEventListener("click", () => { changeSlide(--currentSlideIndex); console.log("Slide précédente"); selectedDot()});
+rightArrow.addEventListener("click", () => { changeSlide(++currentSlideIndex); console.log("Slide suivante"); selectedDot()});
+
+// DOTS 
+for (let i = 0; i < totalSlides ; i++) {
+	let dot = document.createElement("div")
+	dot.classList.add("dot")
+	dots.appendChild(dot)
 }
 
-leftArrow.addEventListener("click", () => changeSlide(slidesOrder--))
-rightArrow.addEventListener("click", () => changeSlide(slidesOrder++))
+function selectedDot() {
+	const allDots = document.querySelectorAll(".dot");
+    allDots.forEach((dot, index) => {
+        if (index === currentSlideIndex) {
+            dot.classList.add("dot_selected");
+        } else {
+            dot.classList.remove("dot_selected");
+        }
+    });
+}
+
+selectedDot()
+
+// CHANGE SLIDE
+function changeSlide(newSlideIndex) {
+    if (newSlideIndex > (totalSlides - 1)) 
+        currentSlideIndex = 0;
+    else if (newSlideIndex < 0)
+        currentSlideIndex = (totalSlides - 1);
+    else
+        currentSlideIndex = newSlideIndex;
+
+    image.src = `assets/images/slideshow/${slides[currentSlideIndex].image}`;
+    tagLine.innerHTML = slides[currentSlideIndex].tagLine;
+}
